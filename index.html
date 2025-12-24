@@ -237,6 +237,41 @@
     }
 
     renderQuestions();
+    function saveDataFile() {
+    const name = document.getElementById('playerName').value || 'Anonieme_Speler';
+    const position = document.getElementById('playerPosition').value || 'Onbekend';
+    const resultText = document.getElementById('result-display').innerText;
+    const scores = document.getElementById('scoringTable').innerText;
+    const coachNotes = document.getElementById('coachComments').value;
+
+    // Combineer alle data in één tekstbestand
+    const content = `
+ELITE PERFORMANCE ASSESSMENT - KVC WESTERLO
+-------------------------------------------
+SPELER: ${name}
+POSITIE: ${position}
+DATUM: ${new Date().toLocaleDateString()}
+
+RESULTAAT:
+${resultText}
+
+SCORING MATRIX:
+${scores}
+
+COACH INTERVIEW NOTITIES & OPMERKINGEN:
+${coachNotes}
+-------------------------------------------
+    `;
+
+    // Maak het bestand aan
+    const blob = new Blob([content], { type: 'text/plain' });
+    const link = document.createElement('a');
+    
+    // Automatische bestandsnaam: Volledige_Naam_Speler.txt
+    link.download = `${name.replace(/\s+/g, '_')}_Rapport.txt`;
+    link.href = window.URL.createObjectURL(blob);
+    link.click();
+}
 </script>
 </body>
 </html>
